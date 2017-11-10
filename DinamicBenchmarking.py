@@ -11,7 +11,7 @@ maxWeight = 0
 weightsAndValues = []
 
 
-def GenRandomMatrix(nrows, ncolumns, minval, maxval):
+def GenRandomMatrixMina(nrows, ncolumns, minval, maxval):
     global mina
     global ancho
     global profundidad
@@ -24,6 +24,14 @@ def GenRandomMatrix(nrows, ncolumns, minval, maxval):
     profundidad = len(mina[0]) - 1
     ancho = len(mina)
     memoize = [[-1 for j in range(profundidad + 1)] for i in range(ancho)]
+
+def GenRandomMatrix(nrows, ncolumns, minval, maxval):
+    mat = []
+    for i in range(0, nrows):
+        mat += [[]]
+        for j in range(0, ncolumns):
+            mat[i] += [random.randint(minval, maxval)]
+    return mat
 
 
 def GenRandomPairArray(ncolumns, minval1, maxval1, minval2, maxval2):
@@ -117,6 +125,7 @@ def leer_archivo_mochila(nombre_archivo):
 
 
 def minaOroPDaux(fila, columna):
+    global memoize
     if columna == profundidad:
         return mina[fila][columna]
     elif memoize[fila][columna] != -1:
@@ -160,7 +169,7 @@ def benchmark_knapSack(weightsAndValues, maxWeight):
 
 	for i in range(0,10):
 		start_time = timeit.default_timer()
-		KnapsackBruteForce(weightsAndValues, maxWeight)
+		print(KnapsackBruteForce(weightsAndValues, maxWeight))
 		time += timeit.default_timer() - start_time
 
 	print("Tiempo promedio de 10 corridas con Fuerza Bruta")
@@ -170,11 +179,40 @@ def benchmark_knapSack(weightsAndValues, maxWeight):
 
 	for i in range(0,10):
 		start_time = timeit.default_timer()
-		knapSackDinamic(weightsAndValues, maxWeight)
+		print(knapSackDinamic(weightsAndValues, maxWeight))
 		time += timeit.default_timer() - start_time
 
 	print("Tiempo promedio de 10 corridas con Dinámica")
 	print(time/10)
+
+def benchmark_mina():
+    global memoize
+    print("Benchmarking del problema de la Mina de Oro")
+    print("Matriz")
+    print(mina)
+
+    time = 0
+
+    for i in range(0,10):
+        start_time = timeit.default_timer()
+        print(minaOroFB())
+        time += timeit.default_timer() - start_time
+
+    print("Tiempo promedio de 10 corridas con Fuerza Bruta")
+    print(time/10)
+
+    time = 0
+
+    for i in range(0,10):
+        start_time = timeit.default_timer()
+        print(minaOroPD())
+        time += timeit.default_timer() - start_time
+        for i in range(0, len(memoize)):
+            for j in range(0, len(memoize[0])):
+                memoize[i][j] = -1
+
+    print("Tiempo promedio de 10 corridas con Dinámica")
+    print(time/10)
 
 def minaOroFB():
     camino = -1
@@ -195,12 +233,15 @@ def minaOroPD():
 
 
 def main():
+    print("------------------------------------------------------------------------------------------------------------------------------")
     start_time = timeit.default_timer()
     #leer_archivo_mina("ejemplo2.txt")
-    GenRandomMatrix(10,10,100,200)
-    print(minaOroFB())
-
-    leer_archivo_mochila("ejemplo.txt")
+    print("Mina\n")
+    GenRandomMatrixMina(12,12,100,200)
+    benchmark_mina()
+    print("\n############################################\n")
+    print("Knapsack\n")
+    #leer_archivo_mochila("ejemplo.txt")
     benchmark_knapSack(GenRandomPairArray(10,1,10,10,50),50)
 
 
