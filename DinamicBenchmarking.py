@@ -12,12 +12,18 @@ weightsAndValues = []
 
 
 def GenRandomMatrix(nrows, ncolumns, minval, maxval):
-    mat = []
+    global mina
+    global ancho
+    global profundidad
+    global memoize
     for i in range(0, nrows):
-        mat += [[]]
+        mina += [[]]
         for j in range(0, ncolumns):
-            mat[i] += [random.randint(minval, maxval)]
-    return mat
+            mina[i] += [random.randint(minval, maxval)]
+    ancho = len(mina)
+    profundidad = len(mina[0]) - 1
+    ancho = len(mina)
+    memoize = [[-1 for j in range(profundidad + 1)] for i in range(ancho)]
 
 
 def GenRandomPairArray(ncolumns, minval1, maxval1, minval2, maxval2):
@@ -190,7 +196,8 @@ def minaOroPD():
 
 def main():
     start_time = timeit.default_timer()
-    leer_archivo_mina("ejemplo2.txt")
+    #leer_archivo_mina("ejemplo2.txt")
+    GenRandomMatrix(10,10,100,200)
     print(minaOroFB())
 
     leer_archivo_mochila("ejemplo.txt")
