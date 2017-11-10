@@ -150,7 +150,7 @@ def benchmark_knapSack(weightsAndValues, maxWeight):
 	print("Peso de Mochila")
 	print(maxWeight)
 
-	tiempo = 0
+	time = 0
 
 	for i in range(0,10):
 		start_time = timeit.default_timer()
@@ -158,9 +158,9 @@ def benchmark_knapSack(weightsAndValues, maxWeight):
 		time += timeit.default_timer() - start_time
 
 	print("Tiempo promedio de 10 corridas con Fuerza Bruta")
-	print(tiempo/10)
+	print(time/10)
 
-	tiempo = 0
+	time = 0
 
 	for i in range(0,10):
 		start_time = timeit.default_timer()
@@ -168,7 +168,7 @@ def benchmark_knapSack(weightsAndValues, maxWeight):
 		time += timeit.default_timer() - start_time
 
 	print("Tiempo promedio de 10 corridas con Dinámica")
-	print(tiempo/10)
+	print(time/10)
 
 def minaOroFB():
     camino = -1
