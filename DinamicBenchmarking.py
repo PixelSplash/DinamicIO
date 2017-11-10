@@ -132,9 +132,35 @@ def minaOroFB(fila, columna):
                 minaOroFB(fila, columna + 1), minaOroFB(fila + 1, columna + 1)))
         return mejor
 
+def benchmark_knapSack(weightsAndValues, maxWeight):
+	print("Benchmarking del problema de la Mochila")
+	print("Peso / Valor")
+	print(weightsAndValues)
+	print("Peso de Mochila")
+	print(maxWeight)
+
+	tiempo = 0
+
+	for i in range(0,10):
+		start_time = timeit.default_timer()
+		KnapsackBruteForce(weightsAndValues, maxWeight)
+		time += timeit.default_timer() - start_time
+
+	print("Tiempo promedio de 10 corridas con Fuerza Bruta")
+	print(tiempo/10)
+
+	tiempo = 0
+
+	for i in range(0,10):
+		start_time = timeit.default_timer()
+		knapSackDinamic(weightsAndValues, maxWeight)
+		time += timeit.default_timer() - start_time
+
+	print("Tiempo promedio de 10 corridas con Dinámica")
+	print(tiempo/10)
+
 
 def main():
-    start_time = timeit.default_timer()
     leer_archivo("ejemplo2.txt")
     camino = -1
     for i in range(0, ancho):
@@ -144,8 +170,7 @@ def main():
     print(camino)
 
     leer_archivo_mochila("ejemplo.txt")
-    print(KnapsackBruteForce(weightsAndValues, maxWeight))
-    print(timeit.default_timer() - start_time)
+    benchmark_knapSack(weightsAndValues,maxWeight)
 
 
 main()
