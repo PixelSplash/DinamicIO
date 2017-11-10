@@ -27,8 +27,8 @@ def GenRandomMatrix(nrows, ncolumns, minval, maxval):
 
 
 def GenRandomPairArray(ncolumns, minval1, maxval1, minval2, maxval2):
-    arr1 = GenRandomMatrix(1, ncolumns, minval1, maxval1)
-    arr2 = GenRandomMatrix(1, ncolumns, minval2, maxval2)
+    arr1 = GenRandomMatrix(1, ncolumns, minval1, maxval1)[0]
+    arr2 = GenRandomMatrix(1, ncolumns, minval2, maxval2)[0]
     arr = []
     for i in range(0, ncolumns):
         arr += [(arr1[i], arr2[i])]
@@ -201,7 +201,7 @@ def main():
     print(minaOroFB())
 
     leer_archivo_mochila("ejemplo.txt")
-    benchmark_knapSack(weightsAndValues,maxWeight)
+    benchmark_knapSack(GenRandomPairArray(10,1,10,10,50),50)
 
 
 main()
